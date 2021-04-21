@@ -78,7 +78,27 @@ def delete(id):
     print("sql")
     cursor.execute(sql)
     db.commit()
-    return redirect("/articles")
+
+@app.route('/<int:id>/<edit>', methods=["GET", "POST"])
+def edit(id):
+  cursor = db.cursor()
+  if request.method == "POST":
+    return "Success"
+
+  else:
+    sql = " SELECT * FROM topic WHERE id = {}".format(id)
+    cursor.execute(sql)
+    topic = cursor.fetchall()
+    print(topic)
+    return render_template("/edit_articles.html", article = topic)
+
+
+    # cursor = db.cursor()
+    # sql = f'DELETE FROM topic WHERE id = {id};'
+    # print("sql")
+    # cursor.execute(sql)
+    # db.commit()    
+    # return render_template("/edit_articles.html")
 
 if __name__ == '__main__':
   app.run()
