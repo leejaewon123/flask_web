@@ -79,7 +79,7 @@ def delete(id):
     cursor.execute(sql)
     db.commit()
 
-@app.route('/<int:id>/<edit>', methods=["GET", "POST"])
+@app.route('/<int:id>/edit', methods=["GET", "POST"])
 def edit(id):
   cursor = db.cursor()
   if request.method == "POST":
@@ -88,9 +88,9 @@ def edit(id):
   else:
     sql = " SELECT * FROM topic WHERE id = {}".format(id)
     cursor.execute(sql)
-    topic = cursor.fetchall()
-    print(topic)
-    return render_template("/edit_articles.html", article = topic)
+    topic = cursor.fetchone()
+    print(topic[1])
+    return render_template("edit_article.html", article = topic)
 
 
     # cursor = db.cursor()
